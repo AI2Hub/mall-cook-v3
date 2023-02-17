@@ -32,14 +32,11 @@ declare module '@vue/runtime-core' {
     ElInput: typeof import('element-plus/es')['ElInput']
     ElInputNumber: typeof import('element-plus/es')['ElInputNumber']
     ElOption: typeof import('element-plus/es')['ElOption']
-    ElPagination: typeof import('element-plus/es')['ElPagination']
     ElRadio: typeof import('element-plus/es')['ElRadio']
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
-    ElTag: typeof import('element-plus/es')['ElTag']
-    ElTooltip: typeof import('element-plus/es')['ElTooltip']
     ElUpload: typeof import('element-plus/es')['ElUpload']
     GitControl: typeof import('./src/components/global/gitControl.vue')['default']
     GoodsConfigChoose: typeof import('./src/components/customSchemaTemplate/schemaGoods/goodsConfigChoose.vue')['default']
@@ -76,8 +73,5 @@ declare module '@vue/runtime-core' {
     SearchBar: typeof import('./src/components/searchBar/index.vue')['default']
     SideBar: typeof import('./src/components/sideBar/index.vue')['default']
     TopBar: typeof import('./src/components/topBar/index.vue')['default']
-  }
-  export interface ComponentCustomProperties {
-    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }

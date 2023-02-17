@@ -3,11 +3,11 @@
  * @Description:
  * @Date: 2023-01-17 13:20:38
  * @LastEditors: June
- * @LastEditTime: 2023-01-20 12:45:08
+ * @LastEditTime: 2023-02-17 21:01:56
  */
 import { defineStore } from 'pinia';
 import { userLogin, userRegister } from '@/apis/user';
-import { ElMessage, ElNotification } from 'element-plus';
+import { ElMessage, ElNotification, ElLoading } from 'element-plus';
 import router from '@/router';
 import {
     setAuthToken,
@@ -26,37 +26,49 @@ const useUser = defineStore({
     },
     actions: {
         async doLogin(loginForm: any) {
-            const { status, message, userInfo, token } = await userLogin(
-                loginForm,
-            );
-            if (status === '10000') {
-                ElNotification({
-                    title: '登陆成功',
-                    message: '快去体验可视化给构建商城吧！',
-                    type: 'success',
-                });
-                this.userInfo = userInfo;
-                this.token = token;
-                setAuthToken(token);
-                setAuthUserInfo(userInfo);
-                router.push({
-                    path: '/home',
-                });
-            } else {
-                return ElMessage.error(message);
+            const loadingInstance = ElLoading.service({ fullscreen: true })
+            try {
+                const { status, message, userInfo, token } = await userLogin(
+                    loginForm,
+                );
+                if (status === '10000') {
+                    ElNotification({
+                        title: '登陆成功',
+                        message: '快去体验可视化给构建商城吧！',
+                        type: 'success',
+                    });
+                    this.userInfo = userInfo;
+                    this.token = token;
+                    setAuthToken(token);
+                    setAuthUserInfo(userInfo);
+                    router.push({
+                        path: '/home',
+                    });
+                } else {
+                    return ElMessage.error(message);
+                }
+                loadingInstance.close()
+            } catch (error) {
+                loadingInstance.close()
             }
         },
         async doRegister(registerForm: any, cb: any) {
-            const { status, message } = await userRegister(registerForm);
-            if (status === '10000') {
-                ElNotification({
-                    title: '注册成功',
-                    message: '账户已注册成功，快去登录使用吧',
-                    type: 'success',
-                });
-                cb && typeof cb === 'function' && cb();
-            } else {
-                return ElMessage.error(message);
+            const loadingInstance = ElLoading.service({ fullscreen: true })
+            try {
+                const { status, message } = await userRegister(registerForm);
+                if (status === '10000') {
+                    ElNotification({
+                        title: '注册成功',
+                        message: '账户已注册成功，快去登录使用吧',
+                        type: 'success',
+                    });
+                    cb && typeof cb === 'function' && cb();
+                } else {
+                    return ElMessage.error(message);
+                }
+                loadingInstance.close()
+            } catch (error) {
+                loadingInstance.close()
             }
         },
 
